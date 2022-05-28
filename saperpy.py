@@ -15,6 +15,17 @@ LEVELS = (
     (24, 99)
 )
 
+NUM_COLORS = {
+    1: QColor('#f44336'),
+    2: QColor('#9C27B0'),
+    3: QColor('#3F51B5'),
+    4: QColor('#03A9F4'),
+    5: QColor('#00BCD4'),
+    6: QColor('#4CAF50'),
+    7: QColor('#E91E63'),
+    8: QColor('#FF9800')
+}
+
 IMG_BOMB = QImage('./images/bomb.png')
 IMG_CLOCK = QImage('./images/clock.png')
 IMG_START = QImage('./images/rocket.png')
@@ -75,8 +86,7 @@ class Cell(QWidget):
         if self.is_revealed:
             color = self.palette().color(QPalette.Background)
             outer, inner = color, color
-            if self.is_end:
-                inner = Qt.black
+            
         else:
             outer, inner = Qt.gray, Qt.lightGray
         p.fillRect(r, QBrush(inner))
@@ -91,7 +101,7 @@ class Cell(QWidget):
             elif self.is_start:
                 p.drawPixmap(r, QPixmap(IMG_START))
             elif self.mines_around > 0:
-                pen = QPen(Qt.black)
+                pen = QPen(NUM_COLORS[self.mines_around])
                 p.setPen(pen)
                 f = p.font()
                 f.setBold(True)
